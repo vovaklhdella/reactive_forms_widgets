@@ -15,7 +15,7 @@ dependencies:
   dropdown_search:
     git:
       url: https://github.com/artflutter/searchable_dropdown.git
-      ref: d
+      ref: 9c6519640eac9ccc2108e2660a0fdcd104760226
 
 dev_dependencies:
   flutter_test:
