@@ -159,6 +159,7 @@ class ReactiveDropdownSearch<T, V> extends ReactiveFormField<T, V> {
     DropDownDecoratorProps dropdownDecoratorProps =
         const DropDownDecoratorProps(),
     BeforePopupOpening<V>? onBeforePopupOpening,
+    void Function(bool focused)? onFocusChange,
     Widget Function(BuildContext context, String error)? errorBuilder,
   }) : super(
           valueAccessor: switch (valueAccessor) {
@@ -192,6 +193,12 @@ class ReactiveDropdownSearch<T, V> extends ReactiveFormField<T, V> {
               onSaved: onSaved,
               onBeforeChange: onBeforeChange,
               onBeforePopupOpening: onBeforePopupOpening,
+              onFocusChange: (focused) {
+                if(focused == false && field.control.touched == false) {
+                  field.control.markAsTouched();
+                }
+                onFocusChange?.call(focused);
+              },
               decoratorProps: DropDownDecoratorProps(
                 decoration: effectiveDecoration?.copyWith(
                   errorText: errorBuilder == null ? errorText : null,

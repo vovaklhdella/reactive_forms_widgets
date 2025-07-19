@@ -162,6 +162,7 @@ class ReactiveDropdownSearchMultiSelection<T, V>
     DropDownDecoratorProps dropdownDecoratorProps =
         const DropDownDecoratorProps(),
     BeforePopupOpeningMultiSelection<V>? onBeforePopupOpening,
+    void Function(bool focused)? onFocusChange,
     Widget Function(BuildContext context, String error)? errorBuilder,
   }) : super(
           valueAccessor: switch (valueAccessor) {
@@ -227,6 +228,12 @@ class ReactiveDropdownSearchMultiSelection<T, V>
               onBeforeChange: onBeforeChange,
               onSaved: onSaved,
               onBeforePopupOpening: onBeforePopupOpening,
+              onFocusChange: (focused) {
+                if (focused == false && field.control.touched == false) {
+                  field.control.markAsTouched();
+                }
+                onFocusChange?.call(focused);
+              },
             );
           },
         );
